@@ -1,0 +1,1031 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>社會發展論文題目拉霸機 | Sociology Thesis Slot Machine</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Noto+Serif+TC:wght@400;600;900&family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+  
+  <style>
+    body {
+      font-family: 'Noto Sans TC', sans-serif;
+      background: radial-gradient(circle at 50% 20%, #1e293b 0%, #0f172a 60%, #020617 100%);
+      min-height: 100vh;
+      color: #f8fafc;
+      overflow-x: hidden;
+    }
+    
+    .serif-title {
+      font-family: 'Noto Serif TC', serif;
+    }
+
+    .classic-font {
+      font-family: 'Cinzel', serif;
+    }
+
+    /* Slot Reel Bevel and Shadows */
+    .slot-window {
+      box-shadow: inset 0 10px 20px rgba(0,0,0,0.85), inset 0 -10px 20px rgba(0,0,0,0.85);
+      border: 3px solid #334155;
+    }
+
+    .reel-strip {
+      transition: transform 0.15s ease-out;
+      will-change: transform;
+    }
+
+    .reel-blur {
+      filter: blur(2.5px);
+      transform: scaleY(1.08);
+    }
+
+    /* Vintage Arcade Gold Glow */
+    .gold-accent {
+      background: linear-gradient(135deg, #fbbf24 0%, #d97706 50%, #92400e 100%);
+    }
+
+    .gold-border {
+      border: 2px solid #d97706;
+      box-shadow: 0 0 15px rgba(245, 158, 11, 0.35);
+    }
+
+    /* Pull Lever Styling */
+    .lever-shaft {
+      transform-origin: bottom center;
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .lever-shaft.pulled {
+      transform: rotateX(55deg) scaleY(0.7);
+    }
+
+    /* Glass Effect Card */
+    .glass-card {
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* Custom Scrollbar for Tag lists */
+    .custom-scroll::-webkit-scrollbar {
+      width: 5px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #475569;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body class="p-2 sm:p-6 flex flex-col justify-between">
+
+  <header class="max-w-6xl mx-auto w-full text-center pt-2 pb-6">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs sm:text-sm font-medium mb-3">
+      <i class="fa-solid fa-graduation-cap"></i> 社會學 / 社會發展研究題目靈感生成器
+    </div>
+    <h1 class="text-3xl sm:text-5xl font-black serif-title tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-500 drop-shadow-md">
+      社會發展論文題目拉霸機
+    </h1>
+    <p class="text-slate-400 text-xs sm:text-base mt-2 max-w-2xl mx-auto font-light">
+      拉下把手探索跨域交集！「族群 × 空間 × 社會心理文化」三維矩陣碰撞，啟發獨特研究問題意識。
+    </p>
+  </header>
+
+  <main class="max-w-5xl mx-auto w-full space-y-6">
+    <!-- Slot Machine Box -->
+    <div class="relative glass-card rounded-3xl p-4 sm:p-8 gold-border shadow-2xl bg-slate-900/90">
+      
+      <!-- Top Neon Status Bar -->
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-700/80 pb-4 mb-6 text-xs sm:text-sm">
+        <div class="flex items-center gap-2">
+          <span class="inline-block w-3 h-3 rounded-full bg-emerald-500 animate-pulse" id="status-indicator"></span>
+          <span id="status-text" class="text-emerald-400 font-medium">系統待機中，請拉動拉桿</span>
+        </div>
+        
+        <div class="flex items-center gap-3">
+          <!-- Countdown Timer Display -->
+          <div id="countdown-badge" class="hidden items-center gap-1.5 px-3 py-1 rounded-lg bg-red-950/80 border border-red-500/50 text-red-300 font-mono text-xs sm:text-sm">
+            <i class="fa-regular fa-clock animate-spin"></i>
+            <span>倒數停止: <strong id="countdown-seconds" class="text-red-400">10.0</strong>s</span>
+          </div>
+
+          <!-- Settings Trigger Button -->
+          <button id="open-settings-btn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white border border-slate-700 transition">
+            <i class="fa-solid fa-sliders"></i>
+            <span>參數與題庫設定</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-center">
+        
+        <!-- Slot Reel Windows Container (Col 10 on desktop) -->
+        <div class="md:col-span-10 grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
+          
+          <!-- Column 1: Groups (族群/行動者) -->
+          <div class="flex flex-col">
+            <div class="flex justify-between items-center px-2 py-1.5 bg-slate-800/90 rounded-t-xl border-t border-x border-slate-700">
+              <span class="text-xs font-bold text-amber-300 flex items-center gap-1.5">
+                <i class="fa-solid fa-users text-amber-400"></i> 【左】主體 / 族群
+              </span>
+              <span class="text-[10px] text-slate-400 bg-slate-700 px-1.5 py-0.5 rounded" id="count-groups">0 項</span>
+            </div>
+            <div class="slot-window relative h-44 sm:h-52 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 rounded-b-xl overflow-hidden flex items-center justify-center">
+              <div class="absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-black/90 to-transparent z-10 pointer-events-none"></div>
+              <div class="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-black/90 to-transparent z-10 pointer-events-none"></div>
+              <!-- Target Highlight Center Bar -->
+              <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 h-16 border-y-2 border-amber-500/40 bg-amber-500/10 pointer-events-none z-10"></div>
+              
+              <!-- Reel Inner Track -->
+              <div id="reel-strip-1" class="reel-strip w-full text-center flex flex-col items-center">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Column 2: Spaces (空間/場域) -->
+          <div class="flex flex-col">
+            <div class="flex justify-between items-center px-2 py-1.5 bg-slate-800/90 rounded-t-xl border-t border-x border-slate-700">
+              <span class="text-xs font-bold text-sky-300 flex items-center gap-1.5">
+                <i class="fa-solid fa-map-location-dot text-sky-400"></i> 【中】空間 / 場域
+              </span>
+              <span class="text-[10px] text-slate-400 bg-slate-700 px-1.5 py-0.5 rounded" id="count-spaces">0 項</span>
+            </div>
+            <div class="slot-window relative h-44 sm:h-52 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 rounded-b-xl overflow-hidden flex items-center justify-center">
+              <div class="absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-black/90 to-transparent z-10 pointer-events-none"></div>
+              <div class="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-black/90 to-transparent z-10 pointer-events-none"></div>
+              <!-- Target Highlight Center Bar -->
+              <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 h-16 border-y-2 border-sky-500/40 bg-sky-500/10 pointer-events-none z-10"></div>
+              
+              <!-- Reel Inner Track -->
+              <div id="reel-strip-2" class="reel-strip w-full text-center flex flex-col items-center">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Column 3: Socio-Psychological / Strategy (社會心理文化維度) -->
+          <div class="flex flex-col">
+            <div class="flex justify-between items-center px-2 py-1.5 bg-slate-800/90 rounded-t-xl border-t border-x border-slate-700">
+              <span class="text-xs font-bold text-rose-300 flex items-center gap-1.5">
+                <i class="fa-solid fa-brain text-rose-400"></i> 【右】社會心理文化
+              </span>
+              <span class="text-[10px] text-slate-400 bg-slate-700 px-1.5 py-0.5 rounded" id="count-dimensions">0 項</span>
+            </div>
+            <div class="slot-window relative h-44 sm:h-52 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 rounded-b-xl overflow-hidden flex items-center justify-center">
+              <div class="absolute inset-x-0 top-0 h-10 bg-gradient-to-b from-black/90 to-transparent z-10 pointer-events-none"></div>
+              <div class="absolute inset-x-0 bottom-0 h-10 bg-gradient-to-t from-black/90 to-transparent z-10 pointer-events-none"></div>
+              <!-- Target Highlight Center Bar -->
+              <div class="absolute inset-x-0 top-1/2 -translate-y-1/2 h-16 border-y-2 border-rose-500/40 bg-rose-500/10 pointer-events-none z-10"></div>
+              
+              <!-- Reel Inner Track -->
+              <div id="reel-strip-3" class="reel-strip w-full text-center flex flex-col items-center">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Lever Mechanism (Desktop Col 2 & Mobile Friendly Touch) -->
+        <div class="md:col-span-2 flex flex-row md:flex-col items-center justify-center gap-4 py-2">
+          
+          <!-- Physical Animated Lever (Visible primarily on tablet/desktop) -->
+          <div class="hidden md:flex flex-col items-center select-none cursor-pointer group" id="lever-interactive" title="點擊拉桿開始旋轉 / 再次拉動手動停止">
+            <!-- Lever Ball Top -->
+            <div id="lever-ball" class="w-12 h-12 rounded-full bg-gradient-to-br from-red-500 via-rose-600 to-red-800 shadow-lg shadow-red-500/50 group-hover:brightness-110 flex items-center justify-center border-2 border-red-300">
+              <div class="w-3 h-3 rounded-full bg-white/40 -translate-y-1 -translate-x-1"></div>
+            </div>
+            <!-- Lever Stem -->
+            <div id="lever-shaft" class="lever-shaft w-3 h-28 bg-gradient-to-r from-slate-300 via-slate-100 to-slate-400 rounded-b-sm shadow-inner -mt-1 border-x border-slate-600"></div>
+            <!-- Lever Pivot Base -->
+            <div class="w-16 h-8 bg-gradient-to-b from-slate-700 to-slate-900 rounded-b-xl border-t-2 border-amber-500 shadow-md flex items-center justify-center text-[10px] text-amber-300 font-bold tracking-widest uppercase">
+              PULL
+            </div>
+          </div>
+
+          <!-- Main Interactive Big Button (Essential for mobile & universal click) -->
+          <button id="spin-main-btn" class="w-full md:w-full py-4 px-6 rounded-2xl gold-accent text-slate-950 font-black text-lg sm:text-xl tracking-wider shadow-lg hover:shadow-amber-500/40 active:scale-95 transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-play" id="btn-icon"></i>
+            <span id="btn-label">拉動旋轉 (SPIN)</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Quick Hint Bar -->
+      <div class="mt-4 pt-3 border-t border-slate-800/80 text-center text-xs text-slate-400 flex flex-wrap justify-center items-center gap-3">
+        <span><i class="fa-regular fa-hand-pointer text-amber-400"></i> 操作說明：拉霸開始後，<strong>再次拉動/點擊可立即停止</strong>；未手動停止將於倒數後自動停止。</span>
+      </div>
+
+    </div>
+
+    <!-- Result & Thesis Inspiration Card -->
+    <section id="result-container" class="glass-card rounded-2xl p-5 sm:p-7 border border-slate-700 shadow-xl transition-all duration-300">
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-4 pb-3 border-b border-slate-800">
+        <h3 class="text-base sm:text-lg font-bold text-amber-400 flex items-center gap-2">
+          <i class="fa-solid fa-lightbulb"></i> 命題推演與論文題目擬定建議
+        </h3>
+        <div class="flex items-center gap-2">
+          <button id="copy-topic-btn" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-amber-300 text-xs font-medium border border-slate-700 flex items-center gap-1.5 transition">
+            <i class="fa-regular fa-copy"></i> 複製論文題目
+          </button>
+          <button id="save-history-btn" class="px-3 py-1.5 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 text-xs font-medium border border-amber-500/30 flex items-center gap-1.5 transition">
+            <i class="fa-regular fa-bookmark"></i> 儲存到靈感本
+          </button>
+        </div>
+      </div>
+
+      <!-- Current Draw Highlight -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-4">
+        <div class="p-3 rounded-xl bg-slate-800/60 border border-amber-500/20">
+          <div class="text-[11px] text-slate-400 uppercase tracking-wide">群體對象</div>
+          <div id="res-group" class="text-lg font-bold text-amber-300 mt-0.5">尚未轉動</div>
+        </div>
+        <div class="p-3 rounded-xl bg-slate-800/60 border border-sky-500/20">
+          <div class="text-[11px] text-slate-400 uppercase tracking-wide">空間場域</div>
+          <div id="res-space" class="text-lg font-bold text-sky-300 mt-0.5">尚未轉動</div>
+        </div>
+        <div class="p-3 rounded-xl bg-slate-800/60 border border-rose-500/20">
+          <div class="text-[11px] text-slate-400 uppercase tracking-wide">社會心理 / 互動維度</div>
+          <div id="res-dim" class="text-lg font-bold text-rose-300 mt-0.5">尚未轉動</div>
+        </div>
+      </div>
+
+      <!-- Generated Academic Titles Suggestions -->
+      <div class="space-y-3">
+        <div class="text-xs text-slate-400 font-semibold tracking-wide uppercase">自動擬定題目模版：</div>
+        <div class="p-4 rounded-xl bg-slate-900/90 border border-slate-800 text-slate-200">
+          <p id="thesis-title-primary" class="text-base sm:text-lg font-bold serif-title text-amber-200 leading-relaxed">
+            請按下上方拉桿，系統將自動根據抽籤維度組構論文題幹...
+          </p>
+          <p id="thesis-subtitle-desc" class="text-xs sm:text-sm text-slate-400 mt-2 font-normal leading-normal">
+            這裡將提供社會學理論提問方向（如傅柯微觀權力、高夫曼擬劇論、布迪厄實踐理論或空間生產視角）。
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Saved Notebook Drawer -->
+    <section class="glass-card rounded-2xl p-5 border border-slate-800">
+      <div class="flex items-center justify-between mb-3">
+        <h4 class="text-sm font-bold text-slate-300 flex items-center gap-2">
+          <i class="fa-solid fa-book-bookmark text-amber-400"></i> 我的論文靈感收藏簿 (<span id="saved-count">0</span>)
+        </h4>
+        <button id="clear-history-btn" class="text-xs text-slate-500 hover:text-red-400 transition">
+          清空收藏
+        </button>
+      </div>
+      <div id="saved-list" class="flex flex-col gap-2 max-h-48 overflow-y-auto custom-scroll text-xs">
+        <div class="text-slate-500 text-center py-4">目前尚無已儲存的靈感題目</div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Settings & Custom Items Modal -->
+  <div id="settings-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-3 sm:p-6">
+    <div class="glass-card bg-slate-900 border border-slate-700 w-full max-w-4xl max-h-[90vh] rounded-3xl flex flex-col shadow-2xl overflow-hidden">
+      
+      <!-- Modal Header -->
+      <div class="px-6 py-4 border-b border-slate-800 flex items-center justify-between bg-slate-950/60">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-sliders text-amber-400 text-lg"></i>
+          <h2 class="text-base sm:text-lg font-bold text-white">拉霸機參數與題目庫項目管理</h2>
+        </div>
+        <button id="close-settings-btn" class="w-8 h-8 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-white flex items-center justify-center transition">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <!-- Modal Body (Scrollable) -->
+      <div class="p-6 overflow-y-auto custom-scroll space-y-6 flex-1 text-sm">
+        
+        <!-- SECTION 1: Automatic Stop Duration Settings -->
+        <div class="bg-slate-800/50 p-4 sm:p-5 rounded-2xl border border-slate-700">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <label for="stop-timer-range" class="font-bold text-amber-300 flex items-center gap-2">
+                <i class="fa-solid fa-stopwatch"></i> 自動停止時間設定 (秒)
+              </label>
+              <p class="text-xs text-slate-400 mt-1">
+                拉動把手後，若未再次手動拉動停止，將在此秒數後自動煞車鎖定。
+              </p>
+            </div>
+            <div class="flex items-center gap-3">
+              <input type="range" id="stop-timer-range" min="3" max="30" step="1" value="10" class="w-36 accent-amber-500 cursor-pointer">
+              <span class="inline-flex items-center justify-center w-14 py-1 rounded bg-slate-900 border border-slate-700 font-mono text-amber-400 font-bold" id="stop-timer-display">
+                10 秒
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECTION 2: 3-Column Item Management -->
+        <div>
+          <h3 class="font-bold text-slate-200 text-sm mb-3 flex items-center gap-2">
+            <i class="fa-solid fa-list-check text-sky-400"></i> 三欄位選項內容擴充與編輯
+          </h3>
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            
+            <!-- Col 1 editor: Groups -->
+            <div class="bg-slate-800/40 rounded-2xl p-4 border border-slate-700 flex flex-col h-80">
+              <div class="flex justify-between items-center mb-2">
+                <span class="font-semibold text-amber-300 text-xs">【左】主體 / 族群</span>
+                <span id="badge-cnt-1" class="text-[11px] text-slate-400">0 項</span>
+              </div>
+              <div class="flex gap-1.5 mb-3">
+                <input id="new-item-input-1" type="text" placeholder="新增族群 (如: 外送員)" class="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white w-full focus:outline-none focus:border-amber-400">
+                <button id="add-item-btn-1" class="px-2.5 py-1.5 bg-amber-600 hover:bg-amber-500 text-white rounded-lg text-xs font-bold transition shrink-0">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+              </div>
+              <div id="tag-container-1" class="flex-1 overflow-y-auto custom-scroll space-y-1.5 pr-1">
+                <!-- Tags rendered here -->
+              </div>
+            </div>
+
+            <!-- Col 2 editor: Spaces -->
+            <div class="bg-slate-800/40 rounded-2xl p-4 border border-slate-700 flex flex-col h-80">
+              <div class="flex justify-between items-center mb-2">
+                <span class="font-semibold text-sky-300 text-xs">【中】空間 / 場域</span>
+                <span id="badge-cnt-2" class="text-[11px] text-slate-400">0 項</span>
+              </div>
+              <div class="flex gap-1.5 mb-3">
+                <input id="new-item-input-2" type="text" placeholder="新增空間 (如: 捷運車廂)" class="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white w-full focus:outline-none focus:border-sky-400">
+                <button id="add-item-btn-2" class="px-2.5 py-1.5 bg-sky-600 hover:bg-sky-500 text-white rounded-lg text-xs font-bold transition shrink-0">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+              </div>
+              <div id="tag-container-2" class="flex-1 overflow-y-auto custom-scroll space-y-1.5 pr-1">
+                <!-- Tags rendered here -->
+              </div>
+            </div>
+
+            <!-- Col 3 editor: Dimensions -->
+            <div class="bg-slate-800/40 rounded-2xl p-4 border border-slate-700 flex flex-col h-80">
+              <div class="flex justify-between items-center mb-2">
+                <span class="font-semibold text-rose-300 text-xs">【右】社會心理文化</span>
+                <span id="badge-cnt-3" class="text-[11px] text-slate-400">0 項</span>
+              </div>
+              <div class="flex gap-1.5 mb-3">
+                <input id="new-item-input-3" type="text" placeholder="新增維度 (如: 情感勞動)" class="bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-white w-full focus:outline-none focus:border-rose-400">
+                <button id="add-item-btn-3" class="px-2.5 py-1.5 bg-rose-600 hover:bg-rose-500 text-white rounded-lg text-xs font-bold transition shrink-0">
+                  <i class="fa-solid fa-plus"></i>
+                </button>
+              </div>
+              <div id="tag-container-3" class="flex-1 overflow-y-auto custom-scroll space-y-1.5 pr-1">
+                <!-- Tags rendered here -->
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Reset Defaults Action -->
+        <div class="flex justify-end pt-2">
+          <button id="reset-defaults-btn" class="text-xs text-rose-400 hover:text-rose-300 flex items-center gap-1.5 py-1 px-3 rounded-lg border border-rose-500/20 hover:bg-rose-500/10 transition">
+            <i class="fa-solid fa-rotate-left"></i> 重設為系統預設社會學關鍵詞庫
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="px-6 py-3.5 border-t border-slate-800 flex justify-end bg-slate-950/80">
+        <button id="save-settings-close-btn" class="px-5 py-2 rounded-xl gold-accent text-slate-950 font-bold text-xs sm:text-sm shadow hover:brightness-110 transition">
+          完成並儲存設定
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Toast Notification Box -->
+  <div id="toast-box" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="px-4 py-2.5 rounded-xl bg-slate-900 border border-amber-500 text-amber-300 text-xs sm:text-sm shadow-xl flex items-center gap-2">
+      <i class="fa-solid fa-circle-check text-amber-400"></i>
+      <span id="toast-message">操作完成</span>
+    </div>
+  </div>
+
+  <script>
+    // --- Audio Synthesis via Web Audio API (No external sound dependencies) ---
+    class SoundEngine {
+      constructor() {
+        this.ctx = null;
+      }
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          this.ctx = new AudioContext();
+        }
+        if (this.ctx && this.ctx.state === 'suspended') {
+          this.ctx.resume();
+        }
+      }
+      playClick() {
+        try {
+          this.init();
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(140, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(40, this.ctx.currentTime + 0.04);
+          gain.gain.setValueAtTime(0.2, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.04);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.04);
+        } catch(e) {}
+      }
+      playReelStop(tonePitch = 440) {
+        try {
+          this.init();
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(tonePitch, this.ctx.currentTime);
+          gain.gain.setValueAtTime(0.3, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + 0.25);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.25);
+        } catch(e) {}
+      }
+      playJackpot() {
+        try {
+          this.init();
+          const notes = [523.25, 659.25, 783.99, 1046.50]; // C E G C
+          notes.forEach((freq, idx) => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(freq, this.ctx.currentTime + idx * 0.1);
+            gain.gain.setValueAtTime(0.25, this.ctx.currentTime + idx * 0.1);
+            gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + idx * 0.1 + 0.35);
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.start(this.ctx.currentTime + idx * 0.1);
+            osc.stop(this.ctx.currentTime + idx * 0.1 + 0.35);
+          });
+        } catch(e) {}
+      }
+    }
+
+    const sound = new SoundEngine();
+
+    const DEFAULT_DATA = {
+      groups: [
+        "上班族", "青少年", "婦女", "孕婦", "外送勞動者", "高齡獨居者",
+        "移工族群", "大學研究生", "跨性別社群", "數位游牧民", "全職家庭照護者"
+      ],
+      spaces: [
+        "公共廁所", "公共澡堂/溫泉", "校園空間", "社群虛擬直播間", "捷運通勤車廂",
+        "傳統果菜市場", "大型連鎖量販店", "24小時便利商店", "都市綠地公園", "合租公寓客廳"
+      ],
+      dimensions: [
+        "身體互動與凝視", "話語競爭與抗衡策略", "篩選與逛選行為", "階層化自我宣稱",
+        "隱私邊界劃定", "污名抵抗與微觀協商", "時間感剝奪與焦慮感", "認同符號消費", "情緒勞動與冷漠面具"
+      ],
+      autoStopSeconds: 10
+    };
+
+    // Application State
+    let AppState = {
+      groups: [],
+      spaces: [],
+      dimensions: [],
+      autoStopSeconds: 10,
+      isSpinning: false,
+      countdownTimer: null,
+      countdownRemaining: 10,
+      reelAnimationTimers: [],
+      currentResult: { group: '', space: '', dim: '' },
+      savedHistory: []
+    };
+
+    function loadStateFromStorage() {
+      try {
+        const storedGroups = localStorage.getItem('thesis_slot_groups');
+        const storedSpaces = localStorage.getItem('thesis_slot_spaces');
+        const storedDims = localStorage.getItem('thesis_slot_dims');
+        const storedTime = localStorage.getItem('thesis_slot_time');
+        const storedHistory = localStorage.getItem('thesis_slot_history');
+
+        AppState.groups = storedGroups ? JSON.parse(storedGroups) : [...DEFAULT_DATA.groups];
+        AppState.spaces = storedSpaces ? JSON.parse(storedSpaces) : [...DEFAULT_DATA.spaces];
+        AppState.dimensions = storedDims ? JSON.parse(storedDims) : [...DEFAULT_DATA.dimensions];
+        AppState.autoStopSeconds = storedTime ? parseInt(storedTime, 10) : DEFAULT_DATA.autoStopSeconds;
+        AppState.savedHistory = storedHistory ? JSON.parse(storedHistory) : [];
+      } catch (err) {
+        console.error("Storage load error:", err);
+        AppState.groups = [...DEFAULT_DATA.groups];
+        AppState.spaces = [...DEFAULT_DATA.spaces];
+        AppState.dimensions = [...DEFAULT_DATA.dimensions];
+        AppState.autoStopSeconds = DEFAULT_DATA.autoStopSeconds;
+        AppState.savedHistory = [];
+      }
+    }
+
+    function saveStateToStorage() {
+      try {
+        localStorage.setItem('thesis_slot_groups', JSON.stringify(AppState.groups));
+        localStorage.setItem('thesis_slot_spaces', JSON.stringify(AppState.spaces));
+        localStorage.setItem('thesis_slot_dims', JSON.stringify(AppState.dimensions));
+        localStorage.setItem('thesis_slot_time', AppState.autoStopSeconds.toString());
+        localStorage.setItem('thesis_slot_history', JSON.stringify(AppState.savedHistory));
+      } catch (err) {
+        console.error("Storage save error:", err);
+      }
+    }
+
+    function updateBadgeCounts() {
+      document.getElementById('count-groups').textContent = `${AppState.groups.length} 項`;
+      document.getElementById('count-spaces').textContent = `${AppState.spaces.length} 項`;
+      document.getElementById('count-dimensions').textContent = `${AppState.dimensions.length} 項`;
+
+      document.getElementById('badge-cnt-1').textContent = `${AppState.groups.length} 項`;
+      document.getElementById('badge-cnt-2').textContent = `${AppState.spaces.length} 項`;
+      document.getElementById('badge-cnt-3').textContent = `${AppState.dimensions.length} 項`;
+    }
+
+    // Populate initial stationary item on reels
+    function initializeReelsStatic() {
+      const g = AppState.groups[0] || '上班族';
+      const s = AppState.spaces[0] || '公共廁所';
+      const d = AppState.dimensions[0] || '身體互動';
+
+      setReelStaticDisplay(1, g);
+      setReelStaticDisplay(2, s);
+      setReelStaticDisplay(3, d);
+    }
+
+    function setReelStaticDisplay(reelIndex, text) {
+      const container = document.getElementById(`reel-strip-${reelIndex}`);
+      container.innerHTML = `
+        <div class="py-4 text-base sm:text-xl font-bold tracking-wide text-amber-100 flex items-center justify-center h-16">
+          ${escapeHtml(text)}
+        </div>
+      `;
+      container.style.transform = 'translateY(0px)';
+      container.classList.remove('reel-blur');
+    }
+
+    function triggerLeverPullAnimation() {
+      const shaft = document.getElementById('lever-shaft');
+      const ball = document.getElementById('lever-ball');
+      shaft.classList.add('pulled');
+      ball.classList.add('translate-y-6', 'scale-90');
+      sound.playClick();
+      setTimeout(() => {
+        shaft.classList.remove('pulled');
+        ball.classList.remove('translate-y-6', 'scale-90');
+      }, 350);
+    }
+
+    // Main Toggle: Spin or Manual Stop
+    function handleSpinAction() {
+      if (AppState.groups.length === 0 || AppState.spaces.length === 0 || AppState.dimensions.length === 0) {
+        showToast("每個欄位請至少保留一項資料！");
+        return;
+      }
+
+      triggerLeverPullAnimation();
+
+      if (!AppState.isSpinning) {
+        startSpinning();
+      } else {
+        // User manually pulled again to stop immediately
+        stopSpinningManual();
+      }
+    }
+
+    function startSpinning() {
+      AppState.isSpinning = true;
+
+      // Update UI Status & Buttons
+      const statusText = document.getElementById('status-text');
+      const statusIndicator = document.getElementById('status-indicator');
+      const btnLabel = document.getElementById('btn-label');
+      const btnIcon = document.getElementById('btn-icon');
+      const countdownBadge = document.getElementById('countdown-badge');
+
+      statusText.textContent = "轉輪高速旋轉中... (可再次拉動立即停止)";
+      statusText.className = "text-amber-400 font-semibold animate-pulse";
+      statusIndicator.className = "inline-block w-3 h-3 rounded-full bg-amber-400 animate-ping";
+      
+      btnLabel.textContent = "再次拉動：立即煞停！";
+      btnIcon.className = "fa-solid fa-hand text-red-950";
+      
+      countdownBadge.classList.remove('hidden');
+      countdownBadge.classList.add('flex');
+
+      // Setup Reels Animation with cycling tags
+      setupReelRolling(1, AppState.groups);
+      setupReelRolling(2, AppState.spaces);
+      setupReelRolling(3, AppState.dimensions);
+
+      // Countdown Setup
+      AppState.countdownRemaining = AppState.autoStopSeconds;
+      document.getElementById('countdown-seconds').textContent = AppState.countdownRemaining.toFixed(1);
+
+      const intervalMs = 100;
+      clearInterval(AppState.countdownTimer);
+      AppState.countdownTimer = setInterval(() => {
+        AppState.countdownRemaining -= (intervalMs / 1000);
+        if (AppState.countdownRemaining <= 0) {
+          clearInterval(AppState.countdownTimer);
+          document.getElementById('countdown-seconds').textContent = "0.0";
+          stopSpinningAuto();
+        } else {
+          document.getElementById('countdown-seconds').textContent = Math.max(0, AppState.countdownRemaining).toFixed(1);
+        }
+      }, intervalMs);
+    }
+
+    function setupReelRolling(reelNum, itemList) {
+      const container = document.getElementById(`reel-strip-${reelNum}`);
+      container.classList.add('reel-blur');
+
+      // Generate a chain of items for visual sliding
+      let html = '';
+      for (let i = 0; i < 30; i++) {
+        const item = itemList[Math.floor(Math.random() * itemList.length)];
+        html += `<div class="py-3 text-base sm:text-xl font-bold tracking-wide text-slate-300 h-16 flex items-center justify-center">${escapeHtml(item)}</div>`;
+      }
+      container.innerHTML = html;
+
+      // Spin simulation interval
+      let pos = 0;
+      const step = 20;
+      const spinInterval = setInterval(() => {
+        pos -= step;
+        if (Math.abs(pos) > 600) {
+          pos = 0;
+        }
+        container.style.transform = `translateY(${pos}px)`;
+        if (Math.random() < 0.25) {
+          sound.playClick();
+        }
+      }, 35);
+
+      AppState.reelAnimationTimers[reelNum] = spinInterval;
+    }
+
+    function stopSpinningManual() {
+      showToast("手動即時煞停！鎖定選區...");
+      executeReelStopSequence();
+    }
+
+    function stopSpinningAuto() {
+      showToast("倒數計時完畢，自動煞停！");
+      executeReelStopSequence();
+    }
+
+    function executeReelStopSequence() {
+      clearInterval(AppState.countdownTimer);
+      
+      const countdownBadge = document.getElementById('countdown-badge');
+      countdownBadge.classList.add('hidden');
+      countdownBadge.classList.remove('flex');
+
+      // Pick final deterministic random items
+      const pick1 = AppState.groups[Math.floor(Math.random() * AppState.groups.length)];
+      const pick2 = AppState.spaces[Math.floor(Math.random() * AppState.spaces.length)];
+      const pick3 = AppState.dimensions[Math.floor(Math.random() * AppState.dimensions.length)];
+
+      AppState.currentResult = { group: pick1, space: pick2, dim: pick3 };
+
+      // Staggered stop for realistic suspense (Reel 1, then Reel 2 (+300ms), then Reel 3 (+600ms))
+      stopSingleReel(1, pick1, 100, 392.00, () => {
+        stopSingleReel(2, pick2, 350, 493.88, () => {
+          stopSingleReel(3, pick3, 400, 587.33, () => {
+            // All stopped
+            finalizeRound();
+          });
+        });
+      });
+    }
+
+    function stopSingleReel(reelNum, finalItem, delay, pitch, callback) {
+      setTimeout(() => {
+        clearInterval(AppState.reelAnimationTimers[reelNum]);
+        const container = document.getElementById(`reel-strip-${reelNum}`);
+        container.classList.remove('reel-blur');
+        
+        // Render focused target item centered
+        container.innerHTML = `
+          <div class="py-4 text-base sm:text-2xl font-black tracking-wide text-amber-200 flex items-center justify-center h-16 animate-bounce">
+            ${escapeHtml(finalItem)}
+          </div>
+        `;
+        container.style.transform = 'translateY(0px)';
+        sound.playReelStop(pitch);
+
+        if (callback) callback();
+      }, delay);
+    }
+
+    function finalizeRound() {
+      AppState.isSpinning = false;
+      sound.playJackpot();
+
+      // Reset Button UI
+      const statusText = document.getElementById('status-text');
+      const statusIndicator = document.getElementById('status-indicator');
+      const btnLabel = document.getElementById('btn-label');
+      const btnIcon = document.getElementById('btn-icon');
+
+      statusText.textContent = "已鎖定研究組合！題目推演已完成";
+      statusText.className = "text-emerald-400 font-semibold";
+      statusIndicator.className = "inline-block w-3 h-3 rounded-full bg-emerald-500";
+
+      btnLabel.textContent = "拉動旋轉 (SPIN)";
+      btnIcon.className = "fa-solid fa-play";
+
+      // Render Results into proposal block
+      const { group, space, dim } = AppState.currentResult;
+      document.getElementById('res-group').textContent = group;
+      document.getElementById('res-space').textContent = space;
+      document.getElementById('res-dim').textContent = dim;
+
+      generateAcademicTitles(group, space, dim);
+    }
+
+    // Synthesize Academic Research Titles
+    function generateAcademicTitles(group, space, dim) {
+      const templates = [
+        {
+          title: `《邊界、微觀權力與日常實踐：${group}在${space}中的「${dim}」研究》`,
+          sub: `提問核心：探討${group}如何於${space}這類特定場域中，透過${dim}應對社會結構性規範，展開主體微觀協商或阻抗。`
+        },
+        {
+          title: `《空間生產與主體建構：論${space}場域下${group}的${dim}及其社會後果》`,
+          sub: `理論取徑：借重列斐伏爾（Henri Lefebvre）空間三元論與高夫曼（Erving Goffman）擬劇論，檢視${dim}的象徵秩序。`
+        },
+        {
+          title: `《制度性凝視下的行動策略：${group}於${space}之${dim}質性分析》`,
+          sub: `研究方法建議：深度訪談 12-15 位${group}，並於${space}進行參與觀察，聚焦於「${dim}」之情境脈絡演繹。`
+        }
+      ];
+
+      // Pick one randomly
+      const selected = templates[Math.floor(Math.random() * templates.length)];
+      
+      const titleElem = document.getElementById('thesis-title-primary');
+      const descElem = document.getElementById('thesis-subtitle-desc');
+      
+      titleElem.textContent = selected.title;
+      descElem.textContent = selected.sub;
+
+      // Flash animation
+      const container = document.getElementById('result-container');
+      container.classList.add('ring-2', 'ring-amber-400/50');
+      setTimeout(() => container.classList.remove('ring-2', 'ring-amber-400/50'), 1000);
+    }
+
+    function saveCurrentToHistory() {
+      if (!AppState.currentResult.group) {
+        showToast("尚未產生題目組合，請先拉動拉霸機！");
+        return;
+      }
+      const title = document.getElementById('thesis-title-primary').textContent;
+      const item = {
+        id: Date.now(),
+        group: AppState.currentResult.group,
+        space: AppState.currentResult.space,
+        dim: AppState.currentResult.dim,
+        title: title,
+        timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      };
+
+      AppState.savedHistory.unshift(item);
+      saveStateToStorage();
+      renderSavedHistory();
+      showToast("已成功將題目收藏至靈感本！");
+    }
+
+    function renderSavedHistory() {
+      const listContainer = document.getElementById('saved-list');
+      const countBadge = document.getElementById('saved-count');
+      countBadge.textContent = AppState.savedHistory.length;
+
+      if (AppState.savedHistory.length === 0) {
+        listContainer.innerHTML = `<div class="text-slate-500 text-center py-4">目前尚無已儲存的靈感題目</div>`;
+        return;
+      }
+
+      listContainer.innerHTML = AppState.savedHistory.map(entry => `
+        <div class="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700/80 flex items-start justify-between gap-3 group hover:border-amber-500/40 transition">
+          <div class="flex-1">
+            <div class="flex items-center gap-2 mb-1">
+              <span class="text-[10px] bg-amber-500/20 text-amber-300 px-1.5 py-0.5 rounded font-mono">${entry.timestamp}</span>
+              <span class="text-slate-400 text-[11px]">${escapeHtml(entry.group)} × ${escapeHtml(entry.space)} × ${escapeHtml(entry.dim)}</span>
+            </div>
+            <div class="text-slate-200 font-medium text-xs">${escapeHtml(entry.title)}</div>
+          </div>
+          <button onclick="deleteHistoryItem(${entry.id})" class="text-slate-500 hover:text-rose-400 p-1 transition" title="移除此條">
+            <i class="fa-solid fa-trash-can"></i>
+          </button>
+        </div>
+      `).join('');
+    }
+
+    window.deleteHistoryItem = function(id) {
+      AppState.savedHistory = AppState.savedHistory.filter(i => i.id !== id);
+      saveStateToStorage();
+      renderSavedHistory();
+      showToast("已從靈感本移除");
+    };
+
+    function clearAllHistory() {
+      if (AppState.savedHistory.length === 0) return;
+      AppState.savedHistory = [];
+      saveStateToStorage();
+      renderSavedHistory();
+      showToast("已清空靈感本");
+    }
+
+    function openSettingsModal() {
+      document.getElementById('settings-modal').classList.remove('hidden');
+      document.getElementById('settings-modal').classList.add('flex');
+      
+      // Update UI input values
+      document.getElementById('stop-timer-range').value = AppState.autoStopSeconds;
+      document.getElementById('stop-timer-display').textContent = `${AppState.autoStopSeconds} 秒`;
+
+      renderTagsInModal();
+    }
+
+    function closeSettingsModal() {
+      document.getElementById('settings-modal').classList.add('hidden');
+      document.getElementById('settings-modal').classList.remove('flex');
+      
+      saveStateToStorage();
+      updateBadgeCounts();
+      showToast("設定與題庫項目已自動儲存");
+    }
+
+    function renderTagsInModal() {
+      renderSingleTagList('tag-container-1', AppState.groups, 1);
+      renderSingleTagList('tag-container-2', AppState.spaces, 2);
+      renderSingleTagList('tag-container-3', AppState.dimensions, 3);
+      updateBadgeCounts();
+    }
+
+    function renderSingleTagList(containerId, list, colIndex) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = list.map((item, idx) => `
+        <div class="flex items-center justify-between px-2.5 py-1.5 rounded-lg bg-slate-900 border border-slate-700/80 text-xs text-slate-200">
+          <span class="truncate pr-2">${escapeHtml(item)}</span>
+          <button onclick="removeTagItem(${colIndex}, ${idx})" class="text-slate-500 hover:text-rose-400 shrink-0 p-0.5 transition">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      `).join('');
+    }
+
+    window.removeTagItem = function(colIndex, itemIndex) {
+      if (colIndex === 1) {
+        if (AppState.groups.length <= 1) { showToast("請至少保留一個項目"); return; }
+        AppState.groups.splice(itemIndex, 1);
+      } else if (colIndex === 2) {
+        if (AppState.spaces.length <= 1) { showToast("請至少保留一個項目"); return; }
+        AppState.spaces.splice(itemIndex, 1);
+      } else if (colIndex === 3) {
+        if (AppState.dimensions.length <= 1) { showToast("請至少保留一個項目"); return; }
+        AppState.dimensions.splice(itemIndex, 1);
+      }
+      renderTagsInModal();
+    };
+
+    function addTagItem(colIndex) {
+      const input = document.getElementById(`new-item-input-${colIndex}`);
+      const val = input.value.trim();
+      if (!val) {
+        showToast("請輸入有效名稱！");
+        return;
+      }
+      if (colIndex === 1) {
+        if (AppState.groups.includes(val)) { showToast("該群體已存在"); return; }
+        AppState.groups.push(val);
+      } else if (colIndex === 2) {
+        if (AppState.spaces.includes(val)) { showToast("該空間已存在"); return; }
+        AppState.spaces.push(val);
+      } else if (colIndex === 3) {
+        if (AppState.dimensions.includes(val)) { showToast("該維度已存在"); return; }
+        AppState.dimensions.push(val);
+      }
+      input.value = '';
+      renderTagsInModal();
+      showToast(`已新增：「${val}」`);
+    }
+
+    function resetToSystemDefaults() {
+      AppState.groups = [...DEFAULT_DATA.groups];
+      AppState.spaces = [...DEFAULT_DATA.spaces];
+      AppState.dimensions = [...DEFAULT_DATA.dimensions];
+      AppState.autoStopSeconds = DEFAULT_DATA.autoStopSeconds;
+
+      document.getElementById('stop-timer-range').value = DEFAULT_DATA.autoStopSeconds;
+      document.getElementById('stop-timer-display').textContent = `${DEFAULT_DATA.autoStopSeconds} 秒`;
+
+      renderTagsInModal();
+      showToast("已成功重置為系統初始詞庫！");
+    }
+
+    function copyTopicToClipboard() {
+      const title = document.getElementById('thesis-title-primary').textContent;
+      if (!AppState.currentResult.group) {
+        showToast("尚未產生題目組合，無法複製！");
+        return;
+      }
+
+      // Robust fallback clipboard execution
+      const dummy = document.createElement("textarea");
+      document.body.appendChild(dummy);
+      dummy.value = title;
+      dummy.select();
+      try {
+        document.execCommand("copy");
+        showToast("論文題目已複製至剪貼簿！");
+      } catch (err) {
+        showToast("複製失敗，請手動選取文字");
+      }
+      document.body.removeChild(dummy);
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast-box');
+      const toastMsg = document.getElementById('toast-message');
+      toastMsg.textContent = msg;
+      toast.classList.remove('translate-y-20', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-20', 'opacity-0');
+      }, 2400);
+    }
+
+    function escapeHtml(string) {
+      const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+      };
+      return String(string).replace(/[&<>"']/g, m => map[m]);
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      loadStateFromStorage();
+      updateBadgeCounts();
+      initializeReelsStatic();
+      renderSavedHistory();
+
+      // Lever & Spin Buttons
+      document.getElementById('spin-main-btn').addEventListener('click', handleSpinAction);
+      document.getElementById('lever-interactive').addEventListener('click', handleSpinAction);
+
+      // Settings Modal triggers
+      document.getElementById('open-settings-btn').addEventListener('click', openSettingsModal);
+      document.getElementById('close-settings-btn').addEventListener('click', closeSettingsModal);
+      document.getElementById('save-settings-close-btn').addEventListener('click', closeSettingsModal);
+
+      // Timer Range slider
+      const timerRange = document.getElementById('stop-timer-range');
+      timerRange.addEventListener('input', (e) => {
+        const val = parseInt(e.target.value, 10);
+        AppState.autoStopSeconds = val;
+        document.getElementById('stop-timer-display').textContent = `${val} 秒`;
+      });
+
+      // Tag add buttons & enter key support
+      [1, 2, 3].forEach(idx => {
+        document.getElementById(`add-item-btn-${idx}`).addEventListener('click', () => addTagItem(idx));
+        document.getElementById(`new-item-input-${idx}`).addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') addTagItem(idx);
+        });
+      });
+
+      // Reset Defaults
+      document.getElementById('reset-defaults-btn').addEventListener('click', resetToSystemDefaults);
+
+      // Copy & History
+      document.getElementById('copy-topic-btn').addEventListener('click', copyTopicToClipboard);
+      document.getElementById('save-history-btn').addEventListener('click', saveCurrentToHistory);
+      document.getElementById('clear-history-btn').addEventListener('click', clearAllHistory);
+    });
+  </script>
+</body>
+</html>
